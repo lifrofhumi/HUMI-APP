@@ -54,14 +54,14 @@ export default function SettingsPage() {
       <Navbar />
       
       <div className="pt-32 pb-20 px-6 container mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold mb-8">Account Settings</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-8">Account Settings</h1>
         
         <div className="glass-panel border border-white/10 rounded-3xl p-8">
           <form onSubmit={handleSaveSettings} className="space-y-8">
             
             {/* Theme Settings */}
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <Palette className="text-primary" size={20} /> Appearance
               </h2>
               <div className="space-y-4">
@@ -87,7 +87,7 @@ export default function SettingsPage() {
 
             {/* Notification Settings */}
             <div>
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 flex items-center gap-2">
                 <Bell className="text-primary" size={20} /> Notifications
               </h2>
               <div className="space-y-4">

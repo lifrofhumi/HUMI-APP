@@ -286,34 +286,27 @@ export default function Navbar() {
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full glass-panel border-b border-[var(--glass-border)] shadow-xl animate-in fade-in slide-in-from-top-2 flex flex-col pb-6 px-6 max-h-[calc(100vh-80px)] overflow-y-auto">
-          <Link 
-            href="/events" 
-            className="py-4 border-b border-[var(--glass-border)] text-text-main font-medium hover:text-primary transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Events
-          </Link>
-          
           {user ? (
             <div className="flex flex-col mt-4 gap-2">
-              <div className="flex items-center gap-3 py-2">
+              <div className="flex items-center gap-3 py-2 border-b border-white/10 mb-2">
                 <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center border border-primary/30 overflow-hidden">
                   {user.profile_picture_url ? (
                     <img src={user.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
-                    <User size={20} />
+                    user.name.charAt(0)
                   )}
                 </div>
                 <div>
-                  <p className="font-semibold text-text-main">{user.name}</p>
-                  <p className="text-xs text-text-muted">{user.email}</p>
+                  <p className="font-medium text-text-main">{user.name}</p>
+                  <p className="text-xs text-text-muted">{user.role}</p>
                 </div>
               </div>
 
-              <div className="h-[1px] bg-[var(--glass-border)] my-2" />
-              
               <Link href="/profile" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <User size={18} className="text-text-muted" /> Profile
+              </Link>
+              <Link href="/events" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <Calendar size={18} className="text-text-muted" /> Events
               </Link>
               <Link href="/dashboard" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <LayoutDashboard size={18} className="text-text-muted" /> Dashboard

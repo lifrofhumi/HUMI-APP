@@ -105,7 +105,7 @@ export default function EventDetailsPage() {
           
           {/* Main Cover Image */}
           <div 
-            className="rounded-3xl overflow-hidden glass-panel aspect-video relative cursor-pointer group"
+            className="rounded-3xl overflow-hidden glass-panel h-64 md:h-auto md:aspect-video relative cursor-pointer group"
             onClick={() => images.length > 0 && openLightbox(0)}
           >
              {images.length > 0 ? (

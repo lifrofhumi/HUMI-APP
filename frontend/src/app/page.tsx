@@ -71,8 +71,8 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h2 className="text-2xl md:text-4xl font-bold mb-12">Contact Support</h2>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
-            <a href="mailto:quijadacarlos@gmail.com" className="glass-panel w-full p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 max-w-4xl mx-auto">
+            <a href="mailto:quijadacarlos@gmail.com" className="glass-panel w-full p-4 md:p-6 rounded-2xl flex flex-row items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group text-left">
               <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
                 <Mail size={24} />
               </div>
@@ -82,7 +82,7 @@ export default function Home() {
               </div>
             </a>
             
-            <a href="tel:+2347036990927" className="glass-panel w-full p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group">
+            <a href="tel:+2347036990927" className="glass-panel w-full p-4 md:p-6 rounded-2xl flex flex-row items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group text-left">
               <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
                 <Phone size={24} />
               </div>
@@ -92,7 +92,7 @@ export default function Home() {
               </div>
             </a>
             
-            <a href="https://twitter.com/elonmusk" target="_blank" rel="noopener noreferrer" className="glass-panel w-full p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group">
+            <a href="https://twitter.com/elonmusk" target="_blank" rel="noopener noreferrer" className="glass-panel w-full p-4 md:p-6 rounded-2xl flex flex-row items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group text-left">
               <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4l16 16M4 20L20 4" />
