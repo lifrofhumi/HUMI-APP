@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/ui/Navbar";
 import SessionTimeout from "@/components/ui/SessionTimeout";
+import SupportWidget from "@/components/ui/SupportWidget";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -37,6 +38,7 @@ export default function RootLayout({
         <SessionTimeout />
         <Navbar />
         {children}
+        <SupportWidget />
       </body>
     </html>
   );
