@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar, Shield } from 'lucide-react';
 import api from '@/lib/api';
 
@@ -15,17 +15,23 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
 
   const checkAuth = () => {
     const userData = localStorage.getItem("humi_user");
     if (userData) {
       setUser(JSON.parse(userData));
-      fetchNotifications();
     } else {
       setUser(null);
       setNotifications([]);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchNotifications();
+    }
+  }, [user, pathname]);
 
   const fetchNotifications = async () => {
     try {
@@ -212,7 +218,7 @@ export default function Navbar() {
               </button>
 
               {isNotificationsOpen && (
-                <div className="absolute right-0 md:right-auto md:-translate-x-1/2 mt-4 w-80 glass-panel border border-[var(--glass-border)] rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
+                <div className="absolute right-0 mt-4 w-[85vw] sm:w-80 max-w-[360px] glass-panel border border-[var(--glass-border)] rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
                   <div className="px-4 py-3 border-b border-[var(--glass-border)] flex justify-between items-center">
                     <h3 className="font-semibold text-sm">Notifications</h3>
                     {notifications.some(n => !n.is_read) && (
@@ -227,7 +233,7 @@ export default function Navbar() {
                       </button>
                     )}
                   </div>
-                  <div className="max-h-80 overflow-y-auto">
+                  <div className="max-h-[60vh] overflow-y-auto">
                     {notifications.length === 0 ? (
                       <div className="px-4 py-6 text-center text-text-muted text-sm">No new notifications</div>
                     ) : (
@@ -258,8 +264,8 @@ export default function Navbar() {
                             <div className="flex gap-3">
                               {!n.is_read && <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(var(--primary),0.8)]" title="Unread" />}
                               <div className="flex-1 min-w-0">
-                                <p className={`text-sm break-words whitespace-normal ${!n.is_read ? 'text-text-main font-medium' : 'text-text-muted'}`}>{n.message}</p>
-                                <p className="text-xs text-text-muted mt-1">{new Date(n.created_at).toLocaleString()}</p>
+                                <p className={`text-sm leading-relaxed break-words whitespace-normal ${!n.is_read ? 'text-text-main font-medium' : 'text-text-muted'}`}>{n.message}</p>
+                                <p className="text-xs text-text-muted mt-2">{new Date(n.created_at).toLocaleString()}</p>
                               </div>
                             </div>
                             
