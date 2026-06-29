@@ -91,7 +91,9 @@ export default function Navbar() {
           <img src="/logo.png" alt="HUMI Logo" className="h-8 md:h-14 w-auto" />
         </Link>
         
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+        {/* Nav Items Container */}
+        <div className="flex items-center gap-4 md:gap-8">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <Link href="/events" className="hover:text-primary transition-colors">Events</Link>
           
           <div className="h-4 w-[1px] bg-white/20" />
@@ -283,8 +285,8 @@ export default function Navbar() {
               className="p-2 text-text-muted hover:text-primary transition-colors focus:outline-none"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
+        </div>
         </div>
       </div>
 
