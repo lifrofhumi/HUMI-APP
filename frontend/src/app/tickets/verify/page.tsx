@@ -6,7 +6,7 @@ import api from "@/lib/api";
 import { Loader2, CheckCircle, XCircle, Download, Printer, MapPin, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import html2canvas from "html2canvas";
+import * as htmlToImage from "html-to-image";
 
 function VerifyContent() {
   const searchParams = useSearchParams();
@@ -82,17 +82,13 @@ function VerifyContent() {
         const originalTransform = element.style.transform;
         element.style.transform = "none";
         
-        const canvas = await html2canvas(element, { 
-          scale: 2, 
-          useCORS: true, 
-          logging: false,
-          allowTaint: true,
-          backgroundColor: "#121212"
+        const dataUrl = await htmlToImage.toPng(element, { 
+          pixelRatio: 2, 
+          backgroundColor: "#121212",
         });
         
         element.style.transform = originalTransform;
         
-        const dataUrl = canvas.toDataURL("image/png");
         setGeneratedImage(dataUrl);
       }
     } catch (err: any) {
