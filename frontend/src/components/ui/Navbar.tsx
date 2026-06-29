@@ -3,13 +3,14 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check } from 'lucide-react';
+import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X } from 'lucide-react';
 import api from '@/lib/api';
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -78,6 +79,7 @@ export default function Navbar() {
     localStorage.removeItem("humi_user");
     window.dispatchEvent(new Event("authChange"));
     setIsDropdownOpen(false);
+    setIsMobileMenuOpen(false);
     router.push("/auth/login");
   };
 
@@ -269,7 +271,100 @@ export default function Navbar() {
             </>
           )}
         </div>
+
+        {/* Mobile Toggle Button */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            className="p-2 text-text-muted hover:text-primary transition-colors focus:outline-none"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-20 left-0 w-full glass-panel border-b border-[var(--glass-border)] shadow-xl animate-in fade-in slide-in-from-top-2 flex flex-col pb-6 px-6 max-h-[calc(100vh-80px)] overflow-y-auto">
+          <Link 
+            href="/events" 
+            className="py-4 border-b border-[var(--glass-border)] text-text-main font-medium hover:text-primary transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Events
+          </Link>
+          
+          {user ? (
+            <div className="flex flex-col mt-4 gap-2">
+              <div className="flex items-center gap-3 py-2">
+                <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center border border-primary/30 overflow-hidden">
+                  {user.profile_picture_url ? (
+                    <img src={user.profile_picture_url} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <User size={20} />
+                  )}
+                </div>
+                <div>
+                  <p className="font-semibold text-text-main">{user.name}</p>
+                  <p className="text-xs text-text-muted">{user.email}</p>
+                </div>
+              </div>
+
+              <div className="h-[1px] bg-[var(--glass-border)] my-2" />
+              
+              <Link href="/profile" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <User size={18} className="text-text-muted" /> Profile
+              </Link>
+              <Link href="/dashboard" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <LayoutDashboard size={18} className="text-text-muted" /> Dashboard
+              </Link>
+              <Link href="/dashboard#tickets" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <Ticket size={18} className="text-text-muted" /> My Tickets
+              </Link>
+              
+              {/* Mobile Notifications (Simplified as a link for mobile) */}
+              <Link href="/dashboard#notifications" className="flex items-center justify-between py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <div className="flex items-center gap-3">
+                  <Bell size={18} className="text-text-muted" /> Notifications
+                </div>
+                {notifications.some(n => !n.is_read) && (
+                  <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">New</span>
+                )}
+              </Link>
+
+              <Link href="/settings" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                <Settings size={18} className="text-text-muted" /> Settings
+              </Link>
+
+              <div className="h-[1px] bg-[var(--glass-border)] my-2" />
+
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-3 py-3 text-red-500 hover:text-red-400 transition-colors w-full text-left"
+              >
+                <LogOut size={18} /> Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 mt-6">
+              <Link 
+                href="/auth/login" 
+                className="w-full py-3 text-center rounded-xl border border-[var(--glass-border)] text-text-main font-medium hover:bg-surface transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Log In
+              </Link>
+              <Link 
+                href="/auth/register" 
+                className="w-full py-3 text-center rounded-xl bg-primary text-white font-medium hover:bg-primary-dark transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
     </nav>
   );
 }
