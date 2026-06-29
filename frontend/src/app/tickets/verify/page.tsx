@@ -73,12 +73,24 @@ function VerifyContent() {
       for (const t of tickets) {
         const element = document.getElementById(`ticket-${t.id}`);
         if (element) {
-          const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-          const dataUrl = canvas.toDataURL("image/png");
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = `Ticket_${t.event.title.replace(/\s+/g, '_')}_${t.id.split('-')[0]}.png`;
-          link.click();
+          const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement("a");
+              link.style.display = "none";
+              link.href = url;
+              link.download = `Ticket_${t.event.title.replace(/\s+/g, '_')}_${t.id.split('-')[0]}.png`;
+              document.body.appendChild(link);
+              link.click();
+              
+              // Clean up
+              setTimeout(() => {
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+              }, 100);
+            }
+          }, "image/png");
         }
       }
     } catch (err) {
@@ -97,6 +109,7 @@ function VerifyContent() {
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <button 
+            type="button"
             onClick={() => window.print()}
             className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors hidden sm:flex"
           >
@@ -104,6 +117,7 @@ function VerifyContent() {
             Print Ticket
           </button>
           <button 
+            type="button"
             onClick={downloadTickets}
             className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
           >
