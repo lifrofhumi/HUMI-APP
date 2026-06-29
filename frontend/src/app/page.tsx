@@ -19,10 +19,10 @@ export default function Home() {
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 z-0" />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
+          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-8">
             Lasu Campus <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Event Management</span>
           </h1>
-          <p className="text-xl text-text-muted mb-12 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-text-muted mb-12 max-w-2xl mx-auto">
             Discover, register, and experience the best campus events. Real-time notifications and seamless ticketing all in one platform.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -44,21 +44,21 @@ export default function Home() {
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary">
                 <Calendar size={32} />
               </div>
-              <h3 className="text-2xl font-semibold mb-4">Discover Events</h3>
+              <h3 className="text-xl md:text-2xl font-semibold mb-4">Discover Events</h3>
               <p className="text-text-muted">Find academic, social, and cultural events happening right on your campus.</p>
             </div>
             <div className="glass-panel p-8 rounded-2xl text-center transform transition duration-500 hover:-translate-y-2">
               <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-6 text-secondary">
                 <Ticket size={32} />
               </div>
-              <h3 className="text-2xl font-semibold mb-4">Seamless Ticketing</h3>
+              <h3 className="text-xl md:text-2xl font-semibold mb-4">Seamless Ticketing</h3>
               <p className="text-text-muted">Register and purchase tickets securely. Get instant QR codes for quick entry.</p>
             </div>
             <div className="glass-panel p-8 rounded-2xl text-center transform transition duration-500 hover:-translate-y-2">
               <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-400">
                 <Bell size={32} />
               </div>
-              <h3 className="text-2xl font-semibold mb-4">Real-Time Alerts</h3>
+              <h3 className="text-xl md:text-2xl font-semibold mb-4">Real-Time Alerts</h3>
               <p className="text-text-muted">Never miss out with instant push notifications for your registered events.</p>
             </div>
           </div>
@@ -69,7 +69,7 @@ export default function Home() {
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent z-0" />
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Contact Support</h2>
+          <h2 className="text-2xl md:text-4xl font-bold mb-12">Contact Support</h2>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
             <a href="mailto:quijadacarlos@gmail.com" className="glass-panel w-full p-6 rounded-2xl flex flex-col items-center gap-4 hover:bg-white/5 transition-colors border border-white/10 group">

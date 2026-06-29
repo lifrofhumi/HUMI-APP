@@ -145,7 +145,7 @@ export default function EventDetailsPage() {
           )}
           
           <div>
-            <h1 className="text-4xl font-extrabold mb-4">{event.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-4">{event.title}</h1>
             <p className="text-text-muted whitespace-pre-line leading-relaxed text-lg">
               {event.description}
             </p>
@@ -154,7 +154,7 @@ export default function EventDetailsPage() {
         
         <div>
           <div className="glass-panel p-8 rounded-3xl sticky top-32">
-            <h3 className="text-2xl font-bold mb-6 border-b border-white/10 pb-4">Event Details</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-6 border-b border-white/10 pb-4">Event Details</h3>
             
             <div className="space-y-6 mb-8">
               <div className="flex items-start gap-4">

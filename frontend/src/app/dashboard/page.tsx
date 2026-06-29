@@ -66,7 +66,7 @@ export default function DashboardPage() {
                 user.name.charAt(0)
               )}
             </div>
-            <h2 className="text-xl font-bold">{user.name}</h2>
+            <h2 className="text-lg md:text-xl font-bold">{user.name}</h2>
             <p className="text-text-muted text-sm mb-6">{user.email}</p>
             <div className="inline-block px-3 py-1 bg-surface rounded-full text-xs font-medium tracking-wide border border-white/5 mb-8">
               {user.role}
@@ -91,7 +91,7 @@ export default function DashboardPage() {
         {/* Main Content */}
         <div className="w-full md:w-3/4">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">My Tickets</h1>
+            <h1 className="text-2xl md:text-3xl font-bold">My Tickets</h1>
             {user.role === 'ORGANIZER' && (
               <Link href="/events/create" className="px-5 py-2.5 bg-primary hover:bg-primary-dark rounded-full font-medium transition-colors flex items-center gap-2">
                 <PlusCircle size={20} /> Create Event
