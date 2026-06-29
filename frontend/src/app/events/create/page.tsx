@@ -56,7 +56,19 @@ export default function CreateEventPage() {
     const files = e.target.files;
     if (!files) return;
 
-    const newFiles = Array.from(files).slice(0, 10 - imageFiles.length); // Limit to 10
+    setError(""); // Clear previous errors
+
+    const validFiles = Array.from(files).filter(file => {
+      if (file.size > 5 * 1024 * 1024) {
+        setError(`"${file.name}" is too large. Maximum size is 5MB per image.`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length === 0) return;
+
+    const newFiles = validFiles.slice(0, 10 - imageFiles.length); // Limit to 10
     setImageFiles(prev => [...prev, ...newFiles]);
     
     const newPreviews = newFiles.map(file => URL.createObjectURL(file));
