@@ -1,0 +1,211 @@
+"use client";
+
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import api from "@/lib/api";
+import { Loader2, CheckCircle, XCircle, Download, Printer, MapPin, Calendar, Clock } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+
+function VerifyContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [tickets, setTickets] = useState<any[]>([]);
+
+  useEffect(() => {
+    const reference = searchParams.get("reference");
+
+    if (!reference) {
+      setStatus("error");
+      setErrorMessage("No payment reference found.");
+      return;
+    }
+
+    const verifyPayment = async () => {
+      try {
+        const res = await api.post("/tickets/verify", { reference });
+        setTickets(res.data.tickets || []);
+        setStatus("success");
+      } catch (err: any) {
+        console.error("Verification failed:", err);
+        setStatus("error");
+        setErrorMessage(err.response?.data?.error || "Payment verification failed.");
+      }
+    };
+
+    verifyPayment();
+  }, [searchParams]);
+
+  if (status === "loading") {
+    return (
+      <div className="text-center space-y-6">
+        <Loader2 className="animate-spin text-primary mx-auto" size={64} />
+        <h2 className="text-2xl font-bold">Verifying Payment...</h2>
+        <p className="text-text-muted">Please do not close this page.</p>
+      </div>
+    );
+  }
+
+  if (status === "error") {
+    return (
+      <div className="text-center space-y-6 bg-red-500/10 border border-red-500/30 p-12 rounded-3xl max-w-lg mx-auto">
+        <XCircle className="text-red-500 mx-auto" size={64} />
+        <h2 className="text-2xl font-bold text-red-400">Verification Failed</h2>
+        <p className="text-white/80">{errorMessage}</p>
+        <div className="pt-6">
+          <Link href="/events" className="px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors inline-block">
+            Return to Events
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (tickets.length === 0) return null;
+
+  const eventDate = new Date(tickets[0].event.date);
+
+  return (
+    <div className="max-w-3xl mx-auto w-full">
+      {/* Hide on print */}
+      <div className="text-center space-y-4 mb-8 print:hidden">
+        <CheckCircle className="text-green-500 mx-auto" size={64} />
+        <h2 className="text-3xl font-bold text-green-400">Payment Successful!</h2>
+        <p className="text-white/80">{tickets.length > 1 ? `Your ${tickets.length} tickets have been generated.` : 'Your ticket has been generated.'} You can print them or save as PDF.</p>
+        
+        <div className="flex items-center justify-center gap-4 pt-4">
+          <button 
+            onClick={() => window.print()}
+            className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
+          >
+            <Printer size={20} />
+            Print / Save as PDF
+          </button>
+          <Link href="/dashboard" className="px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors">
+            Go to Dashboard
+          </Link>
+        </div>
+      </div>
+
+        <div className="flex flex-col gap-8">
+          {tickets.map((t, index) => (
+            <div key={t.id} className="bg-surface rounded-3xl overflow-hidden border border-white/10 shadow-2xl print:shadow-none print:border-black/20 print:bg-white print:text-black mb-8 print:break-inside-avoid">
+              {/* Banner */}
+              <div className="h-48 w-full relative bg-surface-light">
+                {t.event.image_url ? (
+                  <Image 
+                    src={t.event.image_url} 
+                    alt={t.event.title}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/40 to-secondary/40">
+                    <span className="text-4xl font-bold text-white/50">{t.event.title.substring(0, 2).toUpperCase()}</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center md:items-start justify-between">
+                <div className="space-y-6 flex-1 w-full">
+                  <div>
+                    <span className="text-primary font-medium text-sm tracking-wider uppercase print:text-black">Admit One {tickets.length > 1 ? `(${index + 1} of ${tickets.length})` : ''}</span>
+                    <h1 className="text-3xl font-bold mt-1 mb-2 print:text-black">{t.event.title}</h1>
+                    <p className="text-text-muted print:text-gray-600">Organized by {t.event.organizer?.name || "Unknown"}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex items-start gap-3">
+                      <Calendar className="text-primary mt-1 print:text-black" size={20} />
+                      <div>
+                        <p className="font-semibold print:text-black">{eventDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+                        <p className="text-sm text-text-muted print:text-gray-600">{eventDate.toLocaleDateString('en-US', { year: 'numeric' })}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Clock className="text-primary mt-1 print:text-black" size={20} />
+                      <div>
+                        <p className="font-semibold print:text-black">{eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</p>
+                        <p className="text-sm text-text-muted print:text-gray-600">Promptly</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:col-span-2">
+                      <MapPin className="text-primary mt-1 print:text-black" size={20} />
+                      <div>
+                        <p className="font-semibold print:text-black">{t.event.location}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-white/10 print:border-black/10 mt-6 grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-xs text-text-muted print:text-gray-500 uppercase tracking-wider">Ticket ID</p>
+                      <p className="font-mono text-sm print:text-black">{t.id.split('-')[0].toUpperCase()}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-text-muted print:text-gray-500 uppercase tracking-wider">Amount Paid</p>
+                      <p className="font-semibold print:text-black">{t.event.price === 0 ? "FREE" : `₦${t.event.price.toLocaleString()}`}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex flex-col items-center justify-center p-6 bg-white rounded-2xl print:p-0 print:border-none">
+                  {t.qr_code_url ? (
+                    <img 
+                      src={t.qr_code_url} 
+                      alt="Ticket QR Code" 
+                      className="w-48 h-48 object-contain"
+                      crossOrigin="anonymous" 
+                    />
+                  ) : (
+                    <div className="w-48 h-48 bg-gray-100 flex items-center justify-center text-gray-400 text-sm">No QR Code</div>
+                  )}
+                  <p className="text-xs text-center mt-3 text-gray-500 print:text-black font-mono">
+                    REF: {t.payment_reference?.split('_')[1]?.substring(0, 8) || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          .max-w-3xl, .max-w-3xl * {
+            visibility: visible;
+          }
+          .max-w-3xl {
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      `}} />
+    </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <div className="flex-1 container mx-auto px-6 py-32 flex items-center justify-center min-h-[80vh]">
+      <Suspense fallback={
+        <div className="text-center space-y-6">
+          <Loader2 className="animate-spin text-primary mx-auto" size={64} />
+          <h2 className="text-2xl font-bold">Loading...</h2>
+        </div>
+      }>
+        <VerifyContent />
+      </Suspense>
+    </div>
+  );
+}
