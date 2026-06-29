@@ -101,12 +101,12 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div className="flex-1 container mx-auto px-6 py-32 max-w-4xl">
+    <div className="flex-1 container mx-auto px-4 py-24 max-w-2xl">
       <Link href="/dashboard" className="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors mb-8">
         <ArrowLeft size={20} /> Back to Dashboard
       </Link>
 
-      <div className="glass-panel p-8 md:p-12 rounded-3xl">
+      <div className="glass-panel p-6 md:p-8 rounded-3xl">
         <div className="mb-10 text-center">
           <h1 className="text-3xl font-bold mb-3">Create New Event</h1>
           <p className="text-text-muted">Fill in the details to publish your event to the campus.</p>
@@ -167,7 +167,7 @@ export default function CreateEventPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2 md:col-span-2">
                 <label className="block text-sm font-medium">Event Title</label>
                 <input
