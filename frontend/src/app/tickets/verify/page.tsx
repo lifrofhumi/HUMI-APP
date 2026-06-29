@@ -14,6 +14,8 @@ function VerifyContent() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [errorMessage, setErrorMessage] = useState("");
   const [tickets, setTickets] = useState<any[]>([]);
+  const [downloading, setDownloading] = useState(false);
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const reference = searchParams.get("reference");
@@ -70,32 +72,34 @@ function VerifyContent() {
 
   const downloadTickets = async () => {
     try {
-      for (const t of tickets) {
-        const element = document.getElementById(`ticket-${t.id}`);
-        if (element) {
-          const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement("a");
-              link.style.display = "none";
-              link.href = url;
-              link.download = `Ticket_${t.event.title.replace(/\s+/g, '_')}_${t.id.split('-')[0]}.png`;
-              document.body.appendChild(link);
-              link.click();
-              
-              // Clean up
-              setTimeout(() => {
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-              }, 100);
-            }
-          }, "image/png");
-        }
+      setDownloading(true);
+      // Generate for the first ticket for simplicity if multiple, or all if we want to loop
+      // But typically users want to download one by one, or we just show the first one
+      const t = tickets[0];
+      const element = document.getElementById(`ticket-${t.id}`);
+      if (element) {
+        // Temporarily adjust styles for better canvas render if needed
+        const originalTransform = element.style.transform;
+        element.style.transform = "none";
+        
+        const canvas = await html2canvas(element, { 
+          scale: 2, 
+          useCORS: true, 
+          logging: false,
+          allowTaint: true,
+          backgroundColor: "#121212"
+        });
+        
+        element.style.transform = originalTransform;
+        
+        const dataUrl = canvas.toDataURL("image/png");
+        setGeneratedImage(dataUrl);
       }
-    } catch (err) {
-      console.error("Failed to download tickets:", err);
-      alert("Failed to download ticket. Please try again.");
+    } catch (err: any) {
+      console.error("Failed to generate ticket:", err);
+      alert("Failed to generate ticket image: " + (err.message || "Unknown error"));
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -119,10 +123,11 @@ function VerifyContent() {
           <button 
             type="button"
             onClick={downloadTickets}
-            className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
+            disabled={downloading}
+            className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors disabled:opacity-50"
           >
-            <Download size={20} />
-            Download Ticket
+            {downloading ? <Loader2 className="animate-spin" size={20} /> : <Download size={20} />}
+            {downloading ? "Generating..." : "Download Ticket"}
           </button>
           <Link href="/dashboard" className="w-full sm:w-auto text-center px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors">
             Go to Dashboard
@@ -232,6 +237,42 @@ function VerifyContent() {
           }
         }
       `}} />
+
+      {/* Generated Image Modal for Mobile Saving */}
+      {generatedImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm print:hidden">
+          <div className="bg-surface border border-white/10 p-6 rounded-3xl max-w-md w-full flex flex-col items-center">
+            <h3 className="text-xl font-bold mb-2">Ticket Ready!</h3>
+            <p className="text-text-muted text-sm text-center mb-6">
+              Long-press (or right-click) the image below and select <strong>"Save Image"</strong> to download it to your device.
+            </p>
+            
+            <div className="w-full max-h-[50vh] overflow-auto rounded-xl border border-white/10 mb-6 bg-black">
+              <img src={generatedImage} alt="Generated Ticket" className="w-full h-auto" />
+            </div>
+
+            <div className="flex gap-4 w-full">
+              <button 
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = generatedImage;
+                  link.download = "Ticket.png";
+                  link.click();
+                }}
+                className="flex-1 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
+              >
+                Force Download
+              </button>
+              <button 
+                onClick={() => setGeneratedImage(null)}
+                className="flex-1 py-3 bg-surface-light hover:bg-white/10 text-white rounded-xl font-medium transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
