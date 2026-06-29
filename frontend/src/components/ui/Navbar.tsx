@@ -285,6 +285,7 @@ export default function Navbar() {
               className="p-2 text-text-muted hover:text-primary transition-colors focus:outline-none"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
         </div>
