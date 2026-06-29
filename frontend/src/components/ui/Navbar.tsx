@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar } from 'lucide-react';
+import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar, Shield } from 'lucide-react';
 import api from '@/lib/api';
 
 export default function Navbar() {
@@ -137,6 +137,16 @@ export default function Navbar() {
                   >
                     <User size={16} className="text-text-muted" /> Profile
                   </Link>
+                  
+                  {user.role === 'ADMIN' && (
+                    <Link 
+                      href="/admin" 
+                      className="flex items-center gap-3 px-4 py-2 hover:bg-surface transition-colors w-full text-left text-sm text-text-main"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      <Shield size={16} className="text-primary" /> Admin Panel
+                    </Link>
+                  )}
                   
                   <Link 
                     href="/dashboard" 
@@ -313,6 +323,11 @@ export default function Navbar() {
               <Link href="/profile" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <User size={18} className="text-text-muted" /> Profile
               </Link>
+              {user.role === 'ADMIN' && (
+                <Link href="/admin" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Shield size={18} className="text-primary" /> Admin Panel
+                </Link>
+              )}
               <Link href="/events" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <Calendar size={18} className="text-text-muted" /> Events
               </Link>
