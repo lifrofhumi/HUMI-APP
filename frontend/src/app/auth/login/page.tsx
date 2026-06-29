@@ -146,7 +146,7 @@ export default function LoginPage() {
             <button
               onClick={handleGoogleLogin}
               disabled={loading}
-              className="w-full flex justify-center items-center py-3 px-4 border border-white/10 rounded-xl bg-surface/50 hover:bg-white/5 text-white font-medium transition-colors disabled:opacity-70"
+              className="w-full flex justify-center items-center py-3 px-4 border border-[var(--glass-border)] rounded-xl bg-surface/50 hover:bg-surface text-text-main font-medium transition-colors disabled:opacity-70"
             >
               <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                 <path

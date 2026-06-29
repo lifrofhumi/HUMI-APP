@@ -77,7 +77,7 @@ export default function DashboardPage() {
                 <Ticket size={20} /> My Tickets
               </Link>
               {user.role === 'ORGANIZER' && (
-                <Link href="/dashboard/events" className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-surface text-text-muted hover:text-white transition-colors">
+                <Link href="/dashboard/events" className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-surface text-text-muted hover:text-text-main transition-colors">
                   <Calendar size={20} /> My Events
                 </Link>
               )}
@@ -141,14 +141,22 @@ export default function DashboardPage() {
                       <span className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border border-green-500/30">
                         {ticket.status}
                       </span>
-                      <span className="px-3 py-1 bg-surface text-text-muted text-xs font-medium rounded-full border border-white/5">
+                      <span className="px-3 py-1 bg-surface text-text-muted text-xs font-medium rounded-full border border-[var(--glass-border)]">
                         {ticket.event.price > 0 ? `₦${ticket.event.price.toLocaleString()}` : "Free"}
                       </span>
                     </div>
                   </div>
-                  <div className="shrink-0 p-4 bg-white rounded-2xl mx-auto md:mx-0">
+                  <div className="shrink-0 p-4 bg-white rounded-2xl mx-auto md:mx-0 flex flex-col items-center gap-3">
                     {/* Mock QR Code Display using the URL */}
                     <img src={ticket.qr_code_url} alt="Ticket QR" className="w-24 h-24" />
+                    <a 
+                      href={ticket.qr_code_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-semibold text-primary hover:text-primary-dark transition-colors"
+                    >
+                      Save Ticket
+                    </a>
                   </div>
                 </div>
               ))}
