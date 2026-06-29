@@ -82,11 +82,34 @@ function VerifyContent() {
         const originalTransform = element.style.transform;
         element.style.transform = "none";
         
+        // Temporarily apply light theme for a beautiful downloadable ticket
+        element.classList.add('light-theme');
+        const whiteBorders = element.querySelectorAll('.border-white\\/10');
+        whiteBorders.forEach(el => {
+          el.classList.remove('border-white/10');
+          el.classList.add('border-black/10');
+        });
+        // Also swap the main container's border if it has it
+        if (element.classList.contains('border-white/10')) {
+          element.classList.remove('border-white/10');
+          element.classList.add('border-black/10');
+        }
+        
         const dataUrl = await htmlToImage.toPng(element, { 
           pixelRatio: 2, 
-          backgroundColor: "#121212",
+          backgroundColor: "#ffffff",
         });
         
+        // Revert styles
+        whiteBorders.forEach(el => {
+          el.classList.remove('border-black/10');
+          el.classList.add('border-white/10');
+        });
+        if (element.classList.contains('border-black/10')) {
+          element.classList.remove('border-black/10');
+          element.classList.add('border-white/10');
+        }
+        element.classList.remove('light-theme');
         element.style.transform = originalTransform;
         
         setGeneratedImage(dataUrl);

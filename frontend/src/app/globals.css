@@ -26,7 +26,7 @@
   --glass-border: rgba(255, 255, 255, 0.2);
 }
 
-html.light {
+html.light, .light-theme {
   /* High contrast colors for white text / light backgrounds */
   --primary: #4F46E5;
   --primary-dark: #4338CA;
