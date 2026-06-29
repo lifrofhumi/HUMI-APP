@@ -6,6 +6,7 @@ import api from "@/lib/api";
 import { Loader2, CheckCircle, XCircle, Download, Printer, MapPin, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import html2canvas from "html2canvas";
 
 function VerifyContent() {
   const searchParams = useSearchParams();
@@ -67,6 +68,25 @@ function VerifyContent() {
 
   const eventDate = new Date(tickets[0].event.date);
 
+  const downloadTickets = async () => {
+    try {
+      for (const t of tickets) {
+        const element = document.getElementById(`ticket-${t.id}`);
+        if (element) {
+          const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+          const dataUrl = canvas.toDataURL("image/png");
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = `Ticket_${t.event.title.replace(/\s+/g, '_')}_${t.id.split('-')[0]}.png`;
+          link.click();
+        }
+      }
+    } catch (err) {
+      console.error("Failed to download tickets:", err);
+      alert("Failed to download ticket. Please try again.");
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto w-full">
       {/* Hide on print */}
@@ -75,15 +95,22 @@ function VerifyContent() {
         <h2 className="text-3xl font-bold text-green-400">Payment Successful!</h2>
         <p className="text-white/80">{tickets.length > 1 ? `Your ${tickets.length} tickets have been generated.` : 'Your ticket has been generated.'} You can print them or save as PDF.</p>
         
-        <div className="flex items-center justify-center gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <button 
             onClick={() => window.print()}
-            className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
+            className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors hidden sm:flex"
           >
             <Printer size={20} />
-            Print / Save as PDF
+            Print Ticket
           </button>
-          <Link href="/dashboard" className="px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors">
+          <button 
+            onClick={downloadTickets}
+            className="w-full sm:w-auto flex justify-center items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-colors"
+          >
+            <Download size={20} />
+            Download Ticket
+          </button>
+          <Link href="/dashboard" className="w-full sm:w-auto text-center px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors">
             Go to Dashboard
           </Link>
         </div>
@@ -91,7 +118,7 @@ function VerifyContent() {
 
         <div className="flex flex-col gap-8">
           {tickets.map((t, index) => (
-            <div key={t.id} className="bg-surface rounded-3xl overflow-hidden border border-white/10 shadow-2xl print:shadow-none print:border-black/20 print:bg-white print:text-black mb-8 print:break-inside-avoid">
+            <div id={`ticket-${t.id}`} key={t.id} className="bg-surface rounded-3xl overflow-hidden border border-white/10 shadow-2xl print:shadow-none print:border-black/20 print:bg-white print:text-black mb-8 print:break-inside-avoid">
               {/* Banner */}
               <div className="h-48 w-full relative bg-surface-light">
                 {t.event.image_url ? (
