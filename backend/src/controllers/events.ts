@@ -425,6 +425,21 @@ export const getAdminPendingEvents = async (req: AuthRequest, res: Response): Pr
   }
 };
 
+export const getAdminAllEvents = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const events = await prisma.event.findMany({
+      include: {
+        organizer: { select: { name: true, faculty: true, department: true } },
+      },
+      orderBy: { submittedAt: 'desc' }
+    });
+    res.status(200).json(events);
+  } catch (error) {
+    console.error('Failed to fetch all events:', error);
+    res.status(500).json({ error: 'Failed to fetch all events' });
+  }
+};
+
 export const approveEvent = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { toast, Toaster } from "react-hot-toast";
 import Link from "next/link";
-import { ClipboardList, Users, BarChart3, ArrowLeft, Check, X, Eye } from "lucide-react";
+import { ClipboardList, Users, BarChart3, ArrowLeft, Check, X, Eye, Trash2, Calendar } from "lucide-react";
 
 interface AdminStats {
   totalUsers: number;
@@ -38,11 +38,12 @@ interface PendingEvent {
   };
 }
 
-type TabType = "overview" | "approvals" | "users";
+type TabType = "overview" | "approvals" | "users" | "events";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [pendingEvents, setPendingEvents] = useState<PendingEvent[]>([]);
+  const [allEvents, setAllEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("overview");
   
@@ -57,12 +58,14 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [statsRes, eventsRes] = await Promise.all([
+      const [statsRes, eventsRes, allEventsRes] = await Promise.all([
         api.get("/admin/stats"),
-        api.get("/events/admin/pending").catch(() => ({ data: [] })) // Fallback if it fails so stats still load
+        api.get("/events/admin/pending").catch(() => ({ data: [] })), // Fallback if it fails so stats still load
+        api.get("/events/admin/all").catch(() => ({ data: [] }))
       ]);
       setStats(statsRes.data);
       setPendingEvents(eventsRes.data);
+      setAllEvents(allEventsRes.data);
     } catch (error) {
       console.error("Failed to fetch admin data", error);
       toast.error("Failed to load admin dashboard. You may not have access.");
@@ -113,8 +116,24 @@ export default function AdminDashboard() {
       setRejectingId(null);
       setRejectionReason("");
       refreshPendingEvents();
+      fetchData(); // Refresh all events list too
     } catch (error) {
       toast.error("Failed to reject event.");
+    }
+  };
+
+  const handleDeleteEvent = async (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this event? This action cannot be undone.")) {
+      return;
+    }
+    try {
+      await api.delete(`/events/${id}`);
+      toast.success("Event deleted permanently.");
+      refreshPendingEvents();
+      setAllEvents(prev => prev.filter(e => e.id !== id));
+      setStats(prev => prev ? { ...prev, totalEvents: prev.totalEvents - 1 } : prev);
+    } catch (error) {
+      toast.error("Failed to delete event.");
     }
   };
 
@@ -173,6 +192,17 @@ export default function AdminDashboard() {
               {stats.pendingEventsCount}
             </span>
           )}
+        </button>
+        <button
+          onClick={() => setActiveTab("events")}
+          className={`flex items-center px-5 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors ${
+            activeTab === "events" 
+              ? "border-primary text-primary" 
+              : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+          }`}
+        >
+          <Calendar className="w-4 h-4 mr-2" />
+          All Events
         </button>
         <button
           onClick={() => setActiveTab("users")}
@@ -299,6 +329,13 @@ export default function AdminDashboard() {
                               >
                                 <X className="h-4 w-4 mr-2" /> Reject
                               </button>
+                              <button
+                                onClick={() => handleDeleteEvent(event.id)}
+                                className="inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition-colors whitespace-nowrap"
+                                title="Permanently Delete Event"
+                              >
+                                <Trash2 className="h-4 w-4 mr-2" /> Delete
+                              </button>
                             </>
                           )}
                         </div>
@@ -308,6 +345,76 @@ export default function AdminDashboard() {
                 </ul>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ALL EVENTS TAB */}
+        {activeTab === "events" && (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-gray-800">All Events</h2>
+              <span className="text-sm text-gray-500">Manage all events on the platform</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Event Name</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Organizer</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {allEvents.map((e) => (
+                    <tr key={e.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                        <div className="flex flex-col">
+                          <span>{e.title}</span>
+                          <span className="text-xs text-gray-500">{e.category}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {e.organizer?.name || 'Unknown'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(e.date).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <span className={`inline-flex px-2.5 py-1 text-xs font-semibold rounded-md ${
+                          e.is_cancelled ? 'bg-red-100 text-red-800' :
+                          e.status === 'Approved' || e.status === 'Published' ? 'bg-green-100 text-green-800' :
+                          e.status === 'Pending Approval' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-gray-100 text-gray-800'
+                        }`}>
+                          {e.is_cancelled ? 'Cancelled' : e.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <div className="flex items-center gap-3">
+                          <Link href={`/events/${e.id}`} target="_blank" className="text-primary hover:text-primary-dark transition-colors" title="View Event">
+                            <Eye size={18} />
+                          </Link>
+                          <button
+                            onClick={() => handleDeleteEvent(e.id)}
+                            className="text-red-500 hover:text-red-700 transition-colors"
+                            title="Delete Event"
+                          >
+                            <Trash2 size={18} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {allEvents.length === 0 && (
+                <div className="p-8 text-center text-gray-500">
+                  No events found on the platform.
+                </div>
+              )}
+            </div>
           </div>
         )}
 

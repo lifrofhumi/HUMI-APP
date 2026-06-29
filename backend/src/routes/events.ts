@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { 
   getEvents, getEventById, createEvent, updateEvent, deleteEvent, 
   addEventImages, deleteEventImage, reorderEventImages, setEventCoverImage,
-  getAdminPendingEvents, approveEvent, rejectEvent
+  getAdminPendingEvents, getAdminAllEvents, approveEvent, rejectEvent
 } from '../controllers/events';
 import { authenticateToken, requireOrganizerOrAdmin, requireAdmin } from '../middlewares/auth';
 import multer from 'multer';
@@ -35,6 +35,7 @@ router.delete('/:id', authenticateToken, requireOrganizerOrAdmin, deleteEvent);
 
 // Admin Approval Routes
 router.get('/admin/pending', authenticateToken, requireAdmin, getAdminPendingEvents);
+router.get('/admin/all', authenticateToken, requireAdmin, getAdminAllEvents);
 router.put('/:id/approve', authenticateToken, requireAdmin, approveEvent);
 router.put('/:id/reject', authenticateToken, requireAdmin, rejectEvent);
 
