@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar, Shield, Info } from 'lucide-react';
+import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar, Shield } from 'lucide-react';
 import api from '@/lib/api';
 
 export default function Navbar() {
@@ -100,8 +100,7 @@ export default function Navbar() {
         {/* Nav Items Container */}
         <div className="flex items-center gap-4 md:gap-8">
           <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <Link href="/events" className="hover:text-primary transition-colors">Events</Link>
-            <Link href="/about" className="hover:text-primary transition-colors">About</Link>
+          <Link href="/events" className="hover:text-primary transition-colors">Events</Link>
           
           <div className="h-4 w-[1px] bg-white/20" />
           
@@ -337,9 +336,6 @@ export default function Navbar() {
               )}
               <Link href="/events" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <Calendar size={18} className="text-text-muted" /> Events
-              </Link>
-              <Link href="/about" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
-                <Info size={18} className="text-text-muted" /> About
               </Link>
               <Link href="/dashboard" className="flex items-center gap-3 py-3 text-text-main hover:text-primary transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
                 <LayoutDashboard size={18} className="text-text-muted" /> Dashboard
