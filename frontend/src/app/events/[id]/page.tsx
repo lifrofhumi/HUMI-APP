@@ -154,7 +154,7 @@ export default function EventDetailsPage() {
         
         <div>
           <div className="glass-panel p-8 rounded-3xl sticky top-32">
-            <h3 className="text-xl md:text-2xl font-bold mb-6 border-b border-white/10 pb-4">Event Details</h3>
+            <h3 className="text-xl md:text-2xl font-bold mb-6 border-b border-[var(--glass-border)] pb-4">Event Details</h3>
             
             <div className="space-y-6 mb-8">
               <div className="flex items-start gap-4">
@@ -162,7 +162,7 @@ export default function EventDetailsPage() {
                   <Calendar size={24} />
                 </div>
                 <div>
-                  <p className="font-medium text-white">{format(new Date(event.date), "EEEE, MMMM d, yyyy")}</p>
+                  <p className="font-medium text-text-main">{format(new Date(event.date), "EEEE, MMMM d, yyyy")}</p>
                   <p className="text-text-muted text-sm">{format(new Date(event.date), "h:mm a")}</p>
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function EventDetailsPage() {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <p className="font-medium text-white">{event.location}</p>
+                  <p className="font-medium text-text-main">{event.location}</p>
                 </div>
               </div>
               
@@ -181,17 +181,17 @@ export default function EventDetailsPage() {
                   <Users size={24} />
                 </div>
                 <div>
-                  <p className="font-medium text-white">{event.capacity} Capacity</p>
+                  <p className="font-medium text-text-main">{event.capacity} Capacity</p>
                   <p className="text-text-muted text-sm">Organized by {event.organizer?.name || "Unknown"}</p>
                 </div>
               </div>
             </div>
             
-            <div className="border-t border-white/10 pt-6">
+            <div className="border-t border-[var(--glass-border)] pt-6">
               <div className="flex flex-col gap-4 mb-6">
                 <div className="flex justify-between items-center">
                   <span className="text-text-muted">Ticket Price</span>
-                  <span className="text-xl font-bold text-white">{event.price > 0 ? `₦${event.price.toLocaleString()}` : "Free"}</span>
+                  <span className="text-xl font-bold text-text-main">{event.price > 0 ? `₦${event.price.toLocaleString()}` : "Free"}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
@@ -200,7 +200,7 @@ export default function EventDetailsPage() {
                     <button 
                       onClick={() => setQuantity(q => Math.max(1, q - 1))}
                       disabled={quantity <= 1 || purchasing}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white disabled:opacity-50 transition-colors"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-text-main disabled:opacity-50 transition-colors"
                     >
                       <Minus size={16} />
                     </button>
@@ -208,7 +208,7 @@ export default function EventDetailsPage() {
                     <button 
                       onClick={() => setQuantity(q => Math.min(event.capacity - (event._count?.tickets || 0), q + 1))}
                       disabled={quantity >= (event.capacity - (event._count?.tickets || 0)) || purchasing}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white disabled:opacity-50 transition-colors"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-text-main disabled:opacity-50 transition-colors"
                     >
                       <Plus size={16} />
                     </button>
@@ -216,7 +216,7 @@ export default function EventDetailsPage() {
                 </div>
 
                 <div className="flex justify-between items-center pt-4 border-t border-white/5">
-                  <span className="text-lg font-medium text-white">Total Amount</span>
+                  <span className="text-lg font-medium text-text-main">Total Amount</span>
                   <span className="text-3xl font-bold text-primary">{event.price > 0 ? `₦${(event.price * quantity).toLocaleString()}` : "Free"}</span>
                 </div>
               </div>
