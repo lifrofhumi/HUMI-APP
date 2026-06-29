@@ -132,7 +132,7 @@ export default function CreateEventPage() {
               
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 {imagePreviews.map((preview, index) => (
-                  <div key={index} className="aspect-square rounded-2xl relative overflow-hidden group border border-white/10">
+                  <div key={index} className="aspect-square rounded-2xl relative overflow-hidden group border border-[var(--glass-border)]">
                     <img src={preview} alt={`Preview ${index}`} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <button
@@ -176,7 +176,7 @@ export default function CreateEventPage() {
                   required
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                  className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                   placeholder="e.g. Annual Tech Symposium 2026"
                 />
               </div>
@@ -189,7 +189,7 @@ export default function CreateEventPage() {
                   rows={4}
                   value={formData.description}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white resize-none"
+                  className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main resize-none"
                   placeholder="Describe your event..."
                 />
               </div>
@@ -206,7 +206,7 @@ export default function CreateEventPage() {
                     required
                     value={formData.date}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                   />
                 </div>
               </div>
@@ -223,7 +223,7 @@ export default function CreateEventPage() {
                     required
                     value={formData.location}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                     placeholder="e.g. Main Auditorium"
                   />
                 </div>
@@ -240,7 +240,7 @@ export default function CreateEventPage() {
                     required
                     value={formData.category}
                     onChange={handleChange as any}
-                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white appearance-none"
+                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main appearance-none"
                   >
                     <option value="General">General</option>
                     <option value="Sports">Sports</option>
@@ -267,7 +267,7 @@ export default function CreateEventPage() {
                     required
                     value={formData.price}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                     placeholder="0.00 for free"
                   />
                 </div>
@@ -286,14 +286,14 @@ export default function CreateEventPage() {
                     required
                     value={formData.capacity}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                     placeholder="e.g. 500"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-white/10 flex justify-end gap-4">
+            <div className="pt-6 border-t border-[var(--glass-border)] flex justify-end gap-4">
               <Link 
                 href="/dashboard"
                 className="px-6 py-3 bg-surface hover:bg-surface/80 text-white rounded-xl font-medium transition-colors"

@@ -164,7 +164,7 @@ export default function EditEventPage() {
                     required
                     value={formData.title}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                    className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                     placeholder="e.g. Annual Tech Symposium 2026"
                   />
                 </div>
@@ -177,7 +177,7 @@ export default function EditEventPage() {
                     rows={4}
                     value={formData.description}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white resize-none"
+                    className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main resize-none"
                     placeholder="Describe your event..."
                   />
                 </div>
@@ -194,7 +194,7 @@ export default function EditEventPage() {
                       required
                       value={formData.date}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                     />
                   </div>
                 </div>
@@ -211,7 +211,7 @@ export default function EditEventPage() {
                       required
                       value={formData.location}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                       placeholder="e.g. Main Auditorium"
                     />
                   </div>
@@ -231,7 +231,7 @@ export default function EditEventPage() {
                       required
                       value={formData.price}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                       placeholder="0.00 for free"
                     />
                   </div>
@@ -250,7 +250,7 @@ export default function EditEventPage() {
                       required
                       value={formData.capacity}
                       onChange={handleChange}
-                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+                      className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
                       placeholder="e.g. 500"
                     />
                   </div>
@@ -262,20 +262,20 @@ export default function EditEventPage() {
                     name="category"
                     value={formData.category}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white appearance-none"
+                    className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main appearance-none"
                   >
-                    <option value="General" className="bg-surface text-white">General</option>
-                    <option value="Technology" className="bg-surface text-white">Technology</option>
-                    <option value="Music" className="bg-surface text-white">Music</option>
-                    <option value="Sports" className="bg-surface text-white">Sports</option>
-                    <option value="Arts" className="bg-surface text-white">Arts</option>
-                    <option value="Business" className="bg-surface text-white">Business</option>
-                    <option value="Education" className="bg-surface text-white">Education</option>
+                    <option value="General" className="bg-surface text-text-main">General</option>
+                    <option value="Technology" className="bg-surface text-text-main">Technology</option>
+                    <option value="Music" className="bg-surface text-text-main">Music</option>
+                    <option value="Sports" className="bg-surface text-text-main">Sports</option>
+                    <option value="Arts" className="bg-surface text-text-main">Arts</option>
+                    <option value="Business" className="bg-surface text-text-main">Business</option>
+                    <option value="Education" className="bg-surface text-text-main">Education</option>
                   </select>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 bg-surface p-4 rounded-xl border border-white/10 mt-6">
+              <div className="flex items-center gap-3 bg-surface p-4 rounded-xl border border-[var(--glass-border)] mt-6">
                 <input
                   type="checkbox"
                   id="is_cancelled"

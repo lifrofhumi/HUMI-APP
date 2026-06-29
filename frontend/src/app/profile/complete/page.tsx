@@ -83,7 +83,7 @@ export default function CompleteProfilePage() {
                 onChange={(e) => setMatricNumber(e.target.value)}
                 pattern="^(22|23|24|25|26)\d{7}$"
                 title="Must be a 9-digit number starting with 22, 23, 24, 25, or 26"
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-white/30"
                 placeholder="240591092"
               />
             </div>
@@ -100,7 +100,7 @@ export default function CompleteProfilePage() {
                 required
                 value={faculty}
                 onChange={(e) => setFaculty(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-white/30"
                 placeholder="Science"
               />
             </div>
@@ -117,7 +117,7 @@ export default function CompleteProfilePage() {
                 required
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-white/30"
                 placeholder="Computer Science"
               />
             </div>
@@ -129,7 +129,7 @@ export default function CompleteProfilePage() {
               <select
                 value={level}
                 onChange={(e) => setLevel(e.target.value)}
-                className="w-full px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white appearance-none"
+                className="w-full px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main appearance-none"
               >
                 <option value="100" className="bg-surface">100 Level</option>
                 <option value="200" className="bg-surface">200 Level</option>
@@ -150,7 +150,7 @@ export default function CompleteProfilePage() {
                   required
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                  className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-white/30"
                   placeholder="08012345678"
                 />
               </div>

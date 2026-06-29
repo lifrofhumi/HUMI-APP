@@ -364,14 +364,14 @@ export default function ProfilePage() {
                     onChange={(e) => setLevel(e.target.value)}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors appearance-none"
                   >
-                    <option value="" className="bg-surface text-white">Select Level</option>
-                    <option value="100L" className="bg-surface text-white">100 Level</option>
-                    <option value="200L" className="bg-surface text-white">200 Level</option>
-                    <option value="300L" className="bg-surface text-white">300 Level</option>
-                    <option value="400L" className="bg-surface text-white">400 Level</option>
-                    <option value="500L" className="bg-surface text-white">500 Level</option>
-                    <option value="Postgraduate" className="bg-surface text-white">Postgraduate</option>
-                    <option value="Alumni" className="bg-surface text-white">Alumni</option>
+                    <option value="" className="bg-surface text-text-main">Select Level</option>
+                    <option value="100L" className="bg-surface text-text-main">100 Level</option>
+                    <option value="200L" className="bg-surface text-text-main">200 Level</option>
+                    <option value="300L" className="bg-surface text-text-main">300 Level</option>
+                    <option value="400L" className="bg-surface text-text-main">400 Level</option>
+                    <option value="500L" className="bg-surface text-text-main">500 Level</option>
+                    <option value="Postgraduate" className="bg-surface text-text-main">Postgraduate</option>
+                    <option value="Alumni" className="bg-surface text-text-main">Alumni</option>
                   </select>
                 </div>
               </div>

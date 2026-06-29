@@ -146,7 +146,7 @@ export default function DashboardPage() {
                       </span>
                     </div>
                   </div>
-                  <div className="shrink-0 p-4 bg-white rounded-2xl mr-8 md:mr-0">
+                  <div className="shrink-0 p-4 bg-white rounded-2xl mx-auto md:mx-0">
                     {/* Mock QR Code Display using the URL */}
                     <img src={ticket.qr_code_url} alt="Ticket QR" className="w-24 h-24" />
                   </div>
