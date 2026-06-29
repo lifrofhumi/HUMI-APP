@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X } from 'lucide-react';
+import { User, ChevronDown, LogOut, Settings, Ticket, LayoutDashboard, Bell, Check, Menu, X, Calendar } from 'lucide-react';
 import api from '@/lib/api';
 
 export default function Navbar() {
