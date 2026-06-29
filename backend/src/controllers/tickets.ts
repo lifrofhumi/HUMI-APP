@@ -120,13 +120,14 @@ export const purchaseTicket = async (req: AuthRequest, res: Response): Promise<v
     console.log(`[Initialize] Key Length: ${secretKey.length}`);
 
     try {
+      const frontendUrl = req.headers.origin || 'http://localhost:3000';
       const paystackRes = await axios.post(
         'https://api.paystack.co/transaction/initialize',
         {
           email: user.email,
           amount: Math.round(event.price * quantity * 100), // convert to kobo, multiplied by quantity
           reference: paymentReference,
-          callback_url: `http://localhost:3000/tickets/verify`,
+          callback_url: `${frontendUrl}/tickets/verify`,
           metadata: {
             event_id,
             user_id: req.user.userId,
