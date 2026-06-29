@@ -98,7 +98,7 @@ export default function RegisterPage() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-text-muted"
                 placeholder="John Doe"
               />
             </div>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-text-muted"
                 placeholder="you@university.edu"
               />
             </div>
@@ -132,7 +132,7 @@ export default function RegisterPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-text-muted"
                 placeholder="••••••••"
               />
             </div>
@@ -151,7 +151,7 @@ export default function RegisterPage() {
                 onChange={(e) => setMatricNumber(e.target.value)}
                 pattern="^(22|23|24|25|26)\d{7}$"
                 title="Must be a 9-digit number starting with 22, 23, 24, 25, or 26"
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white placeholder-white/30"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main placeholder-text-muted"
                 placeholder="240591092"
               />
             </div>
@@ -166,7 +166,7 @@ export default function RegisterPage() {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white appearance-none"
+                className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main appearance-none"
               >
                 <option value="STUDENT" className="bg-surface">Student</option>
                 <option value="ORGANIZER" className="bg-surface">Event Organizer</option>
@@ -186,7 +186,7 @@ export default function RegisterPage() {
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10"></div>
+              <div className="w-full border-t border-[var(--glass-border)]"></div>
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-surface text-text-muted">Or continue with</span>
