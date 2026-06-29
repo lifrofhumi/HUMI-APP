@@ -55,7 +55,7 @@ export default function EventsPage() {
             </div>
             <input
               type="text"
-              className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+              className="w-full pl-10 pr-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
               placeholder="Search events..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -65,7 +65,7 @@ export default function EventsPage() {
           <select 
             value={category} 
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full md:w-40 px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+            className="w-full md:w-40 px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
           >
             {categories.map(cat => <option key={cat} value={cat}>{cat}</option>)}
           </select>
@@ -73,7 +73,7 @@ export default function EventsPage() {
           <select 
             value={type} 
             onChange={(e) => setType(e.target.value)}
-            className="w-full md:w-32 px-4 py-3 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
+            className="w-full md:w-32 px-4 py-3 bg-surface/50 border border-[var(--glass-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-text-main"
           >
             {eventTypes.map(t => <option key={t} value={t}>{t}</option>)}
           </select>

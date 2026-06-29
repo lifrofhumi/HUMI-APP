@@ -113,8 +113,8 @@ export default function Navbar() {
                 </button>
 
                 {isNotificationsOpen && (
-                  <div className="absolute right-0 mt-4 w-80 glass-panel border border-white/10 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                    <div className="px-4 py-3 border-b border-white/5 flex justify-between items-center">
+                  <div className="absolute right-0 mt-4 w-80 glass-panel border border-[var(--glass-border)] rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                    <div className="px-4 py-3 border-b border-[var(--glass-border)] flex justify-between items-center">
                       <h3 className="font-semibold text-sm">Notifications</h3>
                       {notifications.some(n => !n.is_read) && (
                         <button 
@@ -149,18 +149,18 @@ export default function Navbar() {
                                 setIsNotificationsOpen(false);
                                 if (!n.is_read) {
                                   try {
-                                    // Mark as read API call (if backend supports individual mark as read, but for now just update local state)
+                                    await api.patch(`/notifications/${n.id}/read`);
                                     setNotifications(prev => prev.map(notif => notif.id === n.id ? { ...notif, is_read: true } : notif));
                                   } catch (e) {}
                                 }
                                 if (link !== "#") router.push(link);
                               }}
-                              className={`group relative px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors cursor-pointer pr-10 ${!n.is_read ? 'bg-primary/5' : ''}`}
+                              className={`group relative px-4 py-3 border-b border-[var(--glass-border)] last:border-0 hover:bg-surface transition-colors cursor-pointer pr-10 ${!n.is_read ? 'bg-primary/5' : ''}`}
                             >
                               <div className="flex gap-3">
                                 {!n.is_read && <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(var(--primary),0.8)]" title="Unread" />}
                                 <div>
-                                  <p className={`text-sm ${!n.is_read ? 'text-white font-medium' : 'text-white/70'}`}>{n.message}</p>
+                                  <p className={`text-sm ${!n.is_read ? 'text-text-main font-medium' : 'text-text-muted'}`}>{n.message}</p>
                                   <p className="text-xs text-text-muted mt-1">{new Date(n.created_at).toLocaleString()}</p>
                                 </div>
                               </div>
@@ -210,15 +210,15 @@ export default function Navbar() {
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-4 w-56 glass-panel border border-white/10 rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2">
-                  <div className="px-4 py-3 border-b border-white/5 mb-1">
-                    <p className="text-sm font-semibold truncate">{user.name}</p>
+                <div className="absolute right-0 mt-4 w-56 glass-panel border border-[var(--glass-border)] rounded-2xl shadow-xl py-2 overflow-hidden animate-in fade-in slide-in-from-top-2">
+                  <div className="px-4 py-3 border-b border-[var(--glass-border)] mb-1">
+                    <p className="text-sm font-semibold truncate text-text-main">{user.name}</p>
                     <p className="text-xs text-text-muted truncate">{user.email}</p>
                   </div>
                   
                   <Link 
                     href="/profile" 
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 transition-colors w-full text-left text-sm"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-surface transition-colors w-full text-left text-sm text-text-main"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     <User size={16} className="text-text-muted" /> Profile
@@ -226,7 +226,7 @@ export default function Navbar() {
                   
                   <Link 
                     href="/dashboard" 
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 transition-colors w-full text-left text-sm"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-surface transition-colors w-full text-left text-sm text-text-main"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     <LayoutDashboard size={16} className="text-text-muted" /> Dashboard
@@ -234,7 +234,7 @@ export default function Navbar() {
 
                   <Link 
                     href="/dashboard#tickets" 
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 transition-colors w-full text-left text-sm"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-surface transition-colors w-full text-left text-sm text-text-main"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     <Ticket size={16} className="text-text-muted" /> My Tickets
@@ -242,19 +242,19 @@ export default function Navbar() {
 
                   <Link 
                     href="/settings" 
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5 transition-colors w-full text-left text-sm"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-surface transition-colors w-full text-left text-sm text-text-main"
                     onClick={() => setIsDropdownOpen(false)}
                   >
                     <Settings size={16} className="text-text-muted" /> Settings
                   </Link>
 
-                  <div className="h-[1px] bg-white/5 my-1" />
+                  <div className="h-[1px] bg-[var(--glass-border)] my-1" />
 
                   <button 
                     onClick={handleLogout}
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-red-500/10 text-red-400 transition-colors w-full text-left text-sm"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-red-500/10 text-red-500 transition-colors w-full text-left text-sm"
                   >
-                    <LogOut size={16} /> Log Out
+                    <LogOut size={16} /> Logout
                   </button>
                 </div>
               )}

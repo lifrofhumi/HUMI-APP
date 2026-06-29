@@ -277,7 +277,10 @@ export const verifyTicket = async (req: AuthRequest, res: Response): Promise<voi
       return;
     }
 
-    console.log(`Updating database... Generating ${quantity} tickets.`);
+    // Determine the email that purchased the ticket (from Paystack customer data)
+    const purchaserEmail = data.customer?.email || user.email;
+
+    console.log(`Updating database... Generating ${quantity} tickets for ${purchaserEmail}.`);
 
     // Use a transaction to ensure all tickets are created safely
     const createdTickets = await prisma.$transaction(async (tx) => {
@@ -314,7 +317,7 @@ export const verifyTicket = async (req: AuthRequest, res: Response): Promise<voi
 
     // Send Emails asynchronously (after transaction is successful)
     createdTickets.forEach(ticket => {
-      sendTicketEmail(user.email, {
+      sendTicketEmail(purchaserEmail, {
         eventName: event.title,
         date: event.date.toISOString(),
         location: event.location,

@@ -116,6 +116,32 @@ export const markNotificationsAsRead = async (req: AuthRequest, res: Response): 
   }
 };
 
+export const markSingleNotificationAsRead = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+    const { id } = req.params;
+
+    const notification = await prisma.notification.findUnique({ where: { id } });
+    if (!notification || notification.user_id !== req.user.userId) {
+      res.status(404).json({ error: 'Notification not found' });
+      return;
+    }
+
+    await prisma.notification.update({
+      where: { id },
+      data: { is_read: true }
+    });
+
+    res.status(200).json({ message: 'Notification marked as read' });
+  } catch (error) {
+    console.error('Error marking notification read:', error);
+    res.status(500).json({ error: 'Failed to update notification' });
+  }
+};
+
 // Delete a notification
 export const deleteNotification = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
