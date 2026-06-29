@@ -245,8 +245,8 @@ export default function Navbar() {
                           >
                             <div className="flex gap-3">
                               {!n.is_read && <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0 shadow-[0_0_8px_rgba(var(--primary),0.8)]" title="Unread" />}
-                              <div>
-                                <p className={`text-sm ${!n.is_read ? 'text-text-main font-medium' : 'text-text-muted'}`}>{n.message}</p>
+                              <div className="flex-1 min-w-0">
+                                <p className={`text-sm break-words whitespace-normal ${!n.is_read ? 'text-text-main font-medium' : 'text-text-muted'}`}>{n.message}</p>
                                 <p className="text-xs text-text-muted mt-1">{new Date(n.created_at).toLocaleString()}</p>
                               </div>
                             </div>
