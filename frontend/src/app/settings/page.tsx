@@ -65,7 +65,7 @@ export default function SettingsPage() {
                 <Palette className="text-primary" size={20} /> Appearance
               </h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl gap-4 md:gap-0">
                   <div>
                     <h3 className="font-medium">Theme</h3>
                     <p className="text-sm text-text-muted">Select your preferred app theme</p>
@@ -91,7 +91,7 @@ export default function SettingsPage() {
                 <Bell className="text-primary" size={20} /> Notifications
               </h2>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl">
+                <div className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-white/5 border border-white/10 rounded-xl gap-4 md:gap-0">
                   <div>
                     <h3 className="font-medium">Email Notifications</h3>
                     <p className="text-sm text-text-muted">Receive emails about your tickets and events</p>

@@ -86,7 +86,7 @@ export default function Navbar() {
   return (
     <nav className="fixed w-full z-50 glass-panel border-b border-white/10">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 md:gap-3">
+        <Link href="/" className="flex items-center gap-2 md:gap-3 relative z-10 cursor-pointer">
           <span className="text-xl md:text-2xl font-black tracking-tighter">HUMI<span className="text-primary">.</span></span>
           <img src="/logo.png" alt="HUMI Logo" className="h-8 md:h-14 w-auto" />
         </Link>

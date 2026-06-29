@@ -113,7 +113,7 @@ export default function DashboardPage() {
           ) : (
             <div className="space-y-6">
               {tickets.map((ticket) => (
-                <div key={ticket.id} className="relative glass-panel p-6 rounded-3xl flex flex-col md:flex-row gap-6 items-center">
+                <div key={ticket.id} className="relative glass-panel p-6 rounded-3xl flex flex-col md:flex-row gap-6 items-center overflow-hidden">
                   <button 
                     onClick={() => handleDeleteTicket(ticket.id)}
                     className="absolute top-4 right-4 p-2 text-red-400 bg-red-500/10 hover:bg-red-500/20 rounded-full transition-all"
