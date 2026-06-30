@@ -29,7 +29,7 @@ export const getAdminStats = async (req: AuthRequest, res: Response): Promise<vo
     const recentUsers = await prisma.user.findMany({
       orderBy: { created_at: 'desc' },
       take: 10,
-      select: { id: true, name: true, email: true, role: true, is_suspended: true, created_at: true }
+      select: { id: true, name: true, email: true, role: true, is_suspended: true, created_at: true, lastLogin: true }
     });
 
     res.status(200).json({

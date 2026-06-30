@@ -22,6 +22,7 @@ interface User {
   role: string;
   is_suspended: boolean;
   created_at: string;
+  lastLogin?: string;
 }
 
 interface PendingEvent {
@@ -441,6 +442,8 @@ export default function AdminDashboard() {
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Joined</th>
+                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Last Login</th>
                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
@@ -470,6 +473,12 @@ export default function AdminDashboard() {
                             Active
                           </span>
                         )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(u.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {u.lastLogin ? new Date(u.lastLogin).toLocaleString() : 'Never'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         {u.role !== 'ADMIN' && (
