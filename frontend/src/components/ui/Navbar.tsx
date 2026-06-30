@@ -27,12 +27,6 @@ export default function Navbar() {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      fetchNotifications();
-    }
-  }, [user, pathname]);
-
   const fetchNotifications = async () => {
     try {
       const res = await api.get('/notifications');
@@ -41,6 +35,12 @@ export default function Navbar() {
       console.error("Failed to fetch notifications", error);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchNotifications();
+    }
+  }, [user, pathname]);
 
   const markNotificationsAsRead = async () => {
     try {

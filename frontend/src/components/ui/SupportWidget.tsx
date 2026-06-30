@@ -23,7 +23,7 @@ export default function SupportWidget() {
           
           <div className="p-5 space-y-4">
             <p className="text-sm text-text-muted mb-4">
-              Need help? Reach out to us through your preferred platform. We're here to assist you!
+              Need help? Reach out to us through your preferred platform. We&apos;re here to assist you!
             </p>
             
             <a 

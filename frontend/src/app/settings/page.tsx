@@ -8,7 +8,7 @@ import { Palette, Bell, Shield, Save } from 'lucide-react';
 
 export default function SettingsPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<Record<string, unknown> | null>(null);
   const [theme, setTheme] = useState('dark');
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(true);
@@ -19,10 +19,12 @@ export default function SettingsPage() {
       router.push('/auth/login');
       return;
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setUser(JSON.parse(userData));
     
     // Load saved settings if any
     const savedTheme = localStorage.getItem("humi_theme") || 'dark';
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(savedTheme);
   }, [router]);
 
