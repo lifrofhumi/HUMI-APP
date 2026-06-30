@@ -430,6 +430,11 @@ export const getAdminAllEvents = async (req: AuthRequest, res: Response): Promis
     const events = await prisma.event.findMany({
       include: {
         organizer: { select: { name: true, faculty: true, department: true } },
+        _count: {
+          select: {
+            tickets: { where: { status: 'PAID' } }
+          }
+        }
       },
       orderBy: { submittedAt: 'desc' }
     });
